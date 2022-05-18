@@ -1,27 +1,41 @@
 // import logo from './logo.svg';
 // import './App.css';
 import { useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Header from "./components/Header";
+import SettingsPopup from "./components/SettingsPopup";
 import Timer from "./components/Timer";
 
 function App() {
   const [backColor, setBackColor] = useState("rgb(217, 85, 80)");
+  const [settingsActive, setSettingsActive] = useState(false);
+  const pomodoroTime = localStorage.getItem("workTime") ? +localStorage.getItem("workTime") : 25;
+  const breakTime = localStorage.getItem("breakTime") ? +localStorage.getItem("workTime") : 5;
+  const [time, setTime] = useState(pomodoroTime * 60);
   function getTheme(isBreak) {
-    console.log(backColor);
     if (isBreak) {
-      console.log("break");
       setBackColor("rgb(76, 145, 149)");
     } else {
-      console.log("work");
       setBackColor("rgb(217, 85, 80)");
     }
-    console.log(backColor);
   }
   return (
     <AppWrapper backCol={backColor}>
-      <Header />
-      <Timer getTheme={getTheme} backCol={backColor} />
+      <Header setPopupActive={setSettingsActive} />
+      <Timer
+        getTheme={getTheme}
+        backCol={backColor}
+        time={time}
+        setTime={setTime}
+        pomodoroTime={pomodoroTime}
+        breakTime={breakTime}
+      />
+      <SettingsPopup
+        active={settingsActive}
+        setActive={setSettingsActive}
+        time={time}
+        setTime={setTime}
+      />
       {/* 
       1.Header
       2.Timer
@@ -34,14 +48,12 @@ function App() {
 export default App;
 
 const AppWrapper = styled.div`
-  /* background-color: rgb(217, 85, 80); */
   font-family: "Arial Rounded", Consolas, sans-serif;
   background-color: ${(props) => props.backCol};
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: center;
   height: 100vh;
   width: 100%;
-  transition: 1s backgound-color;
+  transition: background-color 0.6s;
 `;

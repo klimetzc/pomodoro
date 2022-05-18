@@ -30,13 +30,17 @@ const BigButtonWrapper = styled.button`
   border-bottom: ${(props) =>
     props.isRunning ? "0px solid white" : "6px solid rgba(0, 0, 0, 0.2)"};
   margin-top: ${(props) => (props.isRunning ? "6px" : "0")};
+  border-right: ${(props) =>
+    props.isRunning ? "0px solid white" : "6px solid rgba(0, 0, 0, 0.2)"};
   border-radius: 6px;
   padding: 10px;
-  /* transition: 0.2s; */
+  user-select: none;
+  transition: 0.2s;
 
   &:active {
     margin-top: 6px;
     border-bottom: 0px solid white;
+    border-right: 0px solid white;
   }
 
   /* ${(props) =>

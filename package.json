@@ -10,7 +10,8 @@
     "react-dom": "^18.1.0",
     "react-scripts": "5.0.1",
     "styled-components": "^5.3.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "worker-timers": "^7.0.47"
   },
   "scripts": {
     "start": "react-scripts start",

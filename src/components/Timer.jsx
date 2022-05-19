@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import BigButton from "./BigButton";
 import * as workerTimer from "worker-timers";
+import { secondsToTimer } from "../utils/utils";
 
 const Timer = (props) => {
   // const breakTime = 5;
@@ -16,11 +17,6 @@ const Timer = (props) => {
   const [totalRounds, setTotalRounds] = useState(0);
 
   let interID = useRef();
-  function secondsToTimer(seconds) {
-    const minutes = `0${Math.floor(seconds / 60)}`.slice(-2); // 050 00
-    const sec = `0${seconds % 60}`.slice(-2);
-    return [minutes, sec];
-  }
 
   useEffect(() => {
     console.log(interID.current);
@@ -61,7 +57,7 @@ const Timer = (props) => {
     }
 
     return () => workerTimer.clearInterval(interID.current);
-  }, [time, isRunning, isBreak, isSkipped, props, autoplay, totalRounds]);
+  }, [time, isRunning, isBreak, isSkipped, props, autoplay, totalRounds, setTime]);
   const startButtonHandler = () => {
     setIsRunning(!isRunning);
     setIsNewRound(false);

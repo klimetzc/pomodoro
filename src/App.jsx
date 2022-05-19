@@ -1,9 +1,10 @@
 // import logo from './logo.svg';
 // import './App.css';
 import { useState } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import Header from "./components/Header";
 import SettingsPopup from "./components/SettingsPopup";
+import Tasks from "./components/Tasks";
 import Timer from "./components/Timer";
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
         pomodoroTime={pomodoroTime}
         breakTime={breakTime}
       />
+      <Tasks />
       <SettingsPopup
         active={settingsActive}
         setActive={setSettingsActive}

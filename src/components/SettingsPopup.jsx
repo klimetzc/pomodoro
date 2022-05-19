@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { secondsToTimer } from "../utils/utils";
 
 const SettingsPopup = (props) => {
   const [workTime, setWorkTime] = useState(

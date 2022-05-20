@@ -13,6 +13,7 @@ function App() {
   const pomodoroTime = localStorage.getItem("workTime") ? +localStorage.getItem("workTime") : 25;
   const breakTime = localStorage.getItem("breakTime") ? +localStorage.getItem("workTime") : 5;
   const [time, setTime] = useState(pomodoroTime * 60);
+
   function getTheme(isBreak) {
     if (isBreak) {
       setBackColor("rgb(76, 145, 149)");
@@ -55,7 +56,7 @@ const AppWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
   transition: background-color 0.6s;
 `;

@@ -1,11 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
-const AddTask = () => {
+const AddTask = (props) => {
+  console.log(props.isCreatorOpen);
   return (
     <AddTaskWrapper
+      setIsCreatorOpen={props.setIsCreatorOpen}
+      isCreatorOpen={props.isCreatorOpen}
       onClick={() => {
-        console.log("Add Task");
+        props.setIsCreatorOpen(true);
       }}
     >
       &#10011; Add Task
@@ -25,4 +28,5 @@ const AddTaskWrapper = styled.button`
   padding: 20px;
   border: 2px dashed rgba(255, 255, 255, 0.4);
   border-radius: 10px;
+  display: ${(props) => (props.isCreatorOpen ? "none" : "block")};
 `;

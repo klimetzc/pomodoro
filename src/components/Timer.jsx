@@ -12,11 +12,16 @@ const Timer = (props) => {
   const [isRunning, setIsRunning] = useState(false);
   const [isNewRound, setIsNewRound] = useState(true);
   const [isBreak, setIsBreak] = useState(false);
-  const [autoplay, setAutoplay] = useState(true);
+  const [autoplay, setAutoplay] = useState(false);
   const [isSkipped, setIsSkipped] = useState(false);
   const [totalRounds, setTotalRounds] = useState(0);
 
   let interID = useRef();
+  if (isBreak) {
+    document.querySelector("#favicon").href = "/favicon-green.ico";
+  } else {
+    document.querySelector("#favicon").href = "/favicon-red.ico";
+  }
 
   useEffect(() => {
     console.log(interID.current);
@@ -28,11 +33,12 @@ const Timer = (props) => {
       const thisBreak = !isBreak;
       setIsBreak(thisBreak);
       props.getTheme(thisBreak);
-      // console.log(thisBreak);
+      console.log("THIS BREAK", thisBreak);
       if (!isSkipped && !isBreak) {
         setTotalRounds(totalRounds + 1);
       }
       if (thisBreak) {
+        console.log("BREAK TIME", props.breakTime);
         setTime(props.breakTime * secondsInMinute);
       } else {
         setTime(props.pomodoroTime * secondsInMinute);
@@ -58,10 +64,20 @@ const Timer = (props) => {
 
     return () => workerTimer.clearInterval(interID.current);
   }, [time, isRunning, isBreak, isSkipped, props, autoplay, totalRounds, setTime]);
+
   const startButtonHandler = () => {
     setIsRunning(!isRunning);
     setIsNewRound(false);
   };
+
+  const skipHandler = () => {
+    setIsRunning(!isRunning);
+    setTime(0);
+    setIsNewRound(true);
+    setIsSkipped(true);
+    clearTimeout(interID);
+  };
+
   return (
     <TimerWrapper>
       <p style={{ fontSize: "14px", margin: "0px" }}>{`COMPLETED ROUNDS: ${totalRounds}`}</p>
@@ -74,13 +90,7 @@ const Timer = (props) => {
         color={props.backCol}
       />
       <button
-        onClick={() => {
-          setIsRunning(!isRunning);
-          setTime(0);
-          setIsNewRound(true);
-          setIsSkipped(true);
-          clearTimeout(interID);
-        }}
+        onClick={skipHandler}
         style={{
           marginTop: "10px",
         }}

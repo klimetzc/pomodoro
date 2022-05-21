@@ -11,7 +11,7 @@ function App() {
   const [backColor, setBackColor] = useState("rgb(217, 85, 80)");
   const [settingsActive, setSettingsActive] = useState(false);
   const pomodoroTime = localStorage.getItem("workTime") ? +localStorage.getItem("workTime") : 25;
-  const breakTime = localStorage.getItem("breakTime") ? +localStorage.getItem("workTime") : 5;
+  const breakTime = localStorage.getItem("breakTime") ? +localStorage.getItem("breakTime") : 5;
   const [time, setTime] = useState(pomodoroTime * 60);
 
   function getTheme(isBreak) {

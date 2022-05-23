@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const AddTask = (props) => {
-  console.log(props.isCreatorOpen);
+  // console.log(props.isCreatorOpen);
   return (
     <AddTaskWrapper
       setIsCreatorOpen={props.setIsCreatorOpen}

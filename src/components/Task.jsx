@@ -4,8 +4,8 @@ import styled from "styled-components";
 const Task = (props) => {
   function dragStartHandler(e, card) {
     props.setCurretCard(card);
-    console.log(card);
-    console.log("current", props.currentCard);
+    // console.log(card);
+    // console.log("current", props.currentCard);
   }
   function dragEndHandler(e) {
     e.target.style.backgroundColor = "white";
@@ -16,20 +16,40 @@ const Task = (props) => {
   }
   function dropHandler(e, card) {
     e.preventDefault();
-    console.log(card);
+    // console.log(card);
+    const newTaskList = props.taskList;
+    const cardDropped = newTaskList.splice(newTaskList.indexOf(props.currentCard), 1)[0];
+    newTaskList.splice(newTaskList.indexOf(card), 0, cardDropped);
+    console.log("NEW TASK LIST", newTaskList);
     props.setTaskList(
-      props.taskList.map((item) => {
-        if (item.id === card.id) {
-          console.log({ ...item, order: props.currentCard.order });
-          return { ...item, order: props.currentCard.order };
-        }
-        if (item.id === props.currentCard.id) {
-          console.log({ ...item, order: props.currentCard.order });
-          return { ...item, order: card.order };
-        }
+      newTaskList.map((item) => {
         return item;
       })
     );
+    // props.setTaskList(
+    //   props.taskList.map((item) => {
+    //     if (item.id === card.id) {
+    //       console.log({ ...item, order: props.currentCard.order });
+    //       return { ...item, order: props.currentCard.order };
+    //     }
+    //     if (item.id === props.currentCard.id) {
+    //       console.log({ ...item, order: props.currentCard.order });
+    //       return { ...item, order: card.order };
+    //     }
+    //     return item;
+    //   })
+    // );
+    /*
+    1. Удалить карточку, которую держу
+    2. Вставить карточу после элемента
+    
+
+    taskList(indexOf(card), 0, currentCard);
+    tasksList.map((item) => {
+      
+    })
+
+    */
     e.target.style.backgroundColor = "white";
   }
 

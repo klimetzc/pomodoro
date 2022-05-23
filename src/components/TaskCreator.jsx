@@ -4,17 +4,17 @@ import styled, { keyframes } from "styled-components";
 const TaskCreator = (props) => {
   const [taskText, setTaskText] = useState("");
   const newOrder = !props.taskList.length || props.taskList[props.taskList.length - 1].order + 1;
-  console.log("TASK TEXT", taskText);
-  console.log("new order: ", newOrder);
+  // console.log("TASK TEXT", taskText);
+  // console.log("new order: ", newOrder);
 
   const thisInput = useRef(null);
   const thisForm = useRef(null);
   useEffect(() => {
-    console.log("INPUT:", thisInput.current);
+    // console.log("INPUT:", thisInput.current);
     thisInput.current.focus();
     function handleClickOutside(event) {
       if (thisForm.current && !thisForm.current.contains(event.target)) {
-        console.log("outside form");
+        // console.log("outside form");
         setTaskText("");
         props.setIsCreatorOpen(false);
       }
@@ -22,7 +22,7 @@ const TaskCreator = (props) => {
     document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      console.log("bye bye");
+      // console.log("bye bye");
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [props, props.isCreatorOpen]);

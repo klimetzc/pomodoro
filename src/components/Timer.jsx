@@ -24,7 +24,7 @@ const Timer = (props) => {
   }
 
   useEffect(() => {
-    console.log(interID.current);
+    // console.log(interID.current);
     if (time === 0) {
       document.title = `${isBreak ? "Time to focus!" : "Time for a break!"}`;
       setIsRunning(false);
@@ -33,12 +33,12 @@ const Timer = (props) => {
       const thisBreak = !isBreak;
       setIsBreak(thisBreak);
       props.getTheme(thisBreak);
-      console.log("THIS BREAK", thisBreak);
+      // console.log("THIS BREAK", thisBreak);
       if (!isSkipped && !isBreak) {
         setTotalRounds(totalRounds + 1);
       }
       if (thisBreak) {
-        console.log("BREAK TIME", props.breakTime);
+        // console.log("BREAK TIME", props.breakTime);
         setTime(props.breakTime * secondsInMinute);
       } else {
         setTime(props.pomodoroTime * secondsInMinute);
@@ -49,7 +49,7 @@ const Timer = (props) => {
         setIsRunning(false);
       }
       setIsSkipped(false);
-      console.log("Round ended");
+      // console.log("Round ended");
       // clearTimeout(interID.current);
     }
     if (time !== 0 && isRunning) {
@@ -57,7 +57,7 @@ const Timer = (props) => {
         isBreak ? "Time for a break!" : "Time to focus!"
       }`;
       interID.current = workerTimer.setInterval(() => {
-        console.log("tick");
+        // console.log("tick");
         setTime(time - 1);
       }, 1000);
     }

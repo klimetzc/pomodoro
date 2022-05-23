@@ -6,9 +6,11 @@ import TaskCreator from "./TaskCreator";
 
 const Tasks = () => {
   const [taskList, setTaskList] = useState([
-    { title: "First task", id: 1, order: 1 },
-    { title: "Third task", id: 2, order: 3 },
-    { title: "Seconds task", id: 3, order: 2 },
+    { title: "1 First task", id: 1, order: 1 },
+    { title: "2 Second task", id: 2, order: 2 },
+    { title: "3 Third task", id: 3, order: 3 },
+    { title: "4 Fourth task", id: 4, order: 4 },
+    { title: "5 Fifth task", id: 5, order: 5 },
   ]);
   const [isCreatorOpen, setIsCreatorOpen] = useState(false);
   const sortCards = (a, b) => {
@@ -18,14 +20,15 @@ const Tasks = () => {
       return -1;
     }
   };
-  console.log("taskList", taskList);
-  console.log("taskList SORTED", taskList.sort(sortCards));
+  // console.log("taskList", taskList);
+  // console.log("taskList SORTED", taskList.sort(sortCards));
 
   const [currentCard, setCurretCard] = useState(null);
   return (
     <TasksWrapper>
       <TasksHeader>Tasks</TasksHeader>
-      {taskList.sort(sortCards).map((item) => {
+      {/* taskList.sort(sortCards).map((item) => .... */}
+      {taskList.map((item) => {
         return (
           <Task
             id={item.id}

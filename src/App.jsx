@@ -1,5 +1,3 @@
-// import logo from './logo.svg';
-// import './App.css';
 import { useState } from "react";
 import styled from "styled-components";
 import Header from "./components/Header";

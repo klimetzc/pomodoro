@@ -1,63 +1,41 @@
 import React from "react";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux/es/exports";
+import { removeTask, sortTask } from "../store/reducers/taskReduser";
 
 const Task = (props) => {
+  const dispatch = useDispatch();
+  const tasks = useSelector((state) => state.tasks.taskList);
+
+  const handleClick = (card) => {
+    dispatch(removeTask(card));
+  };
+
   function dragStartHandler(e, card) {
     props.setCurretCard(card);
-    // console.log(card);
-    // console.log("current", props.currentCard);
   }
+
   function dragEndHandler(e) {
     e.target.style.backgroundColor = "white";
   }
+
   function dragOverHandler(e) {
     e.target.style.backgroundColor = "lightgray";
     e.preventDefault();
   }
+
   function dropHandler(e, card) {
     e.preventDefault();
-    // console.log(card);
-    const newTaskList = props.taskList;
+    const newTaskList = [...tasks];
     const cardDropped = newTaskList.splice(newTaskList.indexOf(props.currentCard), 1)[0];
     newTaskList.splice(newTaskList.indexOf(card), 0, cardDropped);
-    console.log("NEW TASK LIST", newTaskList);
-    props.setTaskList(
-      newTaskList.map((item) => {
-        return item;
-      })
-    );
-    // props.setTaskList(
-    //   props.taskList.map((item) => {
-    //     if (item.id === card.id) {
-    //       console.log({ ...item, order: props.currentCard.order });
-    //       return { ...item, order: props.currentCard.order };
-    //     }
-    //     if (item.id === props.currentCard.id) {
-    //       console.log({ ...item, order: props.currentCard.order });
-    //       return { ...item, order: card.order };
-    //     }
-    //     return item;
-    //   })
-    // );
-    /*
-    1. Удалить карточку, которую держу
-    2. Вставить карточу после элемента
-    
-
-    taskList(indexOf(card), 0, currentCard);
-    tasksList.map((item) => {
-      
-    })
-
-    */
+    dispatch(sortTask(newTaskList));
     e.target.style.backgroundColor = "white";
   }
 
   return (
     <TaskWrapper
       draggable={true}
-      setTaskList={props.setTaskList}
-      taskList={props.setTaskList}
       id={props.id}
       card={props.card}
       currentCard={props.currentCard}
@@ -82,7 +60,7 @@ const Task = (props) => {
 
       <DeleteButton
         onClick={() => {
-          props.setTaskList(props.taskList.filter((item) => item.id !== props.id));
+          handleClick(props.card);
         }}
       >
         Delete

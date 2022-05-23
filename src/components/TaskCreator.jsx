@@ -1,20 +1,29 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled, { keyframes } from "styled-components";
+import { useDispatch, useSelector } from "react-redux/es/exports";
+import { addTask } from "../store/reducers/taskReduser";
 
 const TaskCreator = (props) => {
+  const dispatch = useDispatch();
+  const tasks = useSelector((state) => state.tasks.taskList);
   const [taskText, setTaskText] = useState("");
-  const newOrder = !props.taskList.length || props.taskList[props.taskList.length - 1].order + 1;
-  // console.log("TASK TEXT", taskText);
-  // console.log("new order: ", newOrder);
+  const newOrder = !tasks.length || tasks[tasks.length - 1].order + 1;
 
   const thisInput = useRef(null);
   const thisForm = useRef(null);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(addTask({ title: taskText, id: Date.now(), order: newOrder }));
+    setTaskText("");
+    thisInput.current.focus();
+    thisForm.current.scrollIntoView({ block: "start" });
+  };
+
   useEffect(() => {
-    // console.log("INPUT:", thisInput.current);
     thisInput.current.focus();
     function handleClickOutside(event) {
       if (thisForm.current && !thisForm.current.contains(event.target)) {
-        // console.log("outside form");
         setTaskText("");
         props.setIsCreatorOpen(false);
       }
@@ -22,7 +31,6 @@ const TaskCreator = (props) => {
     document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      // console.log("bye bye");
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [props, props.isCreatorOpen]);
@@ -30,26 +38,10 @@ const TaskCreator = (props) => {
   return (
     <TaskCreatorWrapper
       ref={thisForm}
-      setTaskList={props.setTaskList}
-      taskList={props.taskList}
       isCreatorOpen={props.isCreatorOpen}
       setIsCreatorOpen={props.setIsCreatorOpen}
-      onSubmit={(e) => {
-        e.preventDefault();
-        props.setTaskList([
-          ...props.taskList,
-          { title: taskText, id: Date.now(), order: newOrder },
-        ]);
-        setTaskText("");
-        thisInput.current.focus();
-        thisForm.current.scrollIntoView({ block: "start" });
-      }}
-      // onBlur={() => {
-      //   props.setIsCreatorOpen(false);
-      // }}
+      onSubmit={submitHandler}
     >
-      {/* <TaskCreatorHeader>Task Creator</TaskCreatorHeader> */}
-
       <TaskCreatorInput
         type={"text"}
         value={taskText}
@@ -57,7 +49,6 @@ const TaskCreator = (props) => {
         ref={thisInput}
         onInput={(event) => {
           setTaskText(event.target.value);
-          // console.log(event.currentTarget.textContent);
         }}
       />
       <TaskCreatorSave

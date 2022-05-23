@@ -3,10 +3,15 @@ import styled from "styled-components";
 import BigButton from "./BigButton";
 import * as workerTimer from "worker-timers";
 import { secondsToTimer } from "../utils/utils";
+import { useDispatch, useSelector } from "react-redux/es/exports";
+import { decrement } from "../store/reducers/timeReducer";
 
 const Timer = (props) => {
   // const breakTime = 5;
   const secondsInMinute = 60;
+  const timeR = useSelector((state) => state.time.time);
+  const dispatch = useDispatch();
+  console.log(timeR);
 
   const [time, setTime] = [props.time, props.setTime];
   const [isRunning, setIsRunning] = useState(false);
@@ -63,7 +68,7 @@ const Timer = (props) => {
     }
 
     return () => workerTimer.clearInterval(interID.current);
-  }, [time, isRunning, isBreak, isSkipped, props, autoplay, totalRounds, setTime]);
+  }, [time, isRunning, isBreak, isSkipped, props, autoplay, totalRounds, setTime, dispatch, timeR]);
 
   const startButtonHandler = () => {
     setIsRunning(!isRunning);
@@ -76,6 +81,7 @@ const Timer = (props) => {
     setIsNewRound(true);
     setIsSkipped(true);
     clearTimeout(interID);
+    dispatch(decrement());
   };
 
   return (

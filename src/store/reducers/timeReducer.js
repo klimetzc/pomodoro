@@ -1,17 +1,22 @@
-import { configureStore } from "@reduxjs/toolkit/dist/configureStore";
+import { createSlice } from "@reduxjs/toolkit";
 
-const defaultState = {
-  time: 25 * 60,
-};
+const timeSlice = createSlice({
+  name: "time changer",
+  initialState: {
+    time: 25 * 60,
+  },
+  reducers: {
+    increment(state) {
+      state.time++;
+    },
+    decrement(state, action) {
+      state.time -= action.payload;
+    },
+    setTime(state, action) {
+      state.time = action.payload;
+    },
+  },
+});
 
-const timeReduser = (state = defaultState, action) => {
-  switch (action.type) {
-    case "TIME_CHANGE":
-      return { ...state };
-
-    default:
-      return state;
-  }
-};
-export default timeReduser;
-const store = configureStore();
+export default timeSlice.reducer;
+export const { increment, decrement, setTime } = timeSlice.actions;
